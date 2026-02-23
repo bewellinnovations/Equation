@@ -4,8 +4,6 @@ Created on Fri Apr 11 00:30:51 2014
 
 .. moduleauthor:: Glen Fletcher <glen.fletcher@alphaomega-technology.com.au>
 """
-from ez_setup import use_setuptools
-use_setuptools()
 from setuptools import setup, find_packages
 import os.path
 import re
@@ -14,10 +12,10 @@ pkg_name = 'Equation'
 pkg = {}
 with open(os.path.join(pkg_name,'_info.py')) as f: exec(f.read(),pkg,pkg)
 
-reimg = re.compile("^!\[(?P<label>[^\]]*)\]\((?P<src>[^\)]*)\)$")
-relink = re.compile("\[(?P<label>[^\]]*)\]\((?P<href>[^\)]*)\)")
+reimg = re.compile(r"^!\[(?P<label>[^\]]*)\]\((?P<src>[^\)]*)\)$")
+relink = re.compile(r"\[(?P<label>[^\]]*)\]\((?P<href>[^\)]*)\)")
 reimglink = re.compile(
-"^\[!\[(?P<label>[^\]]*)\]\((?P<src>[^\)]*)\)\]\((?P<href>[^\)]*)\)$")
+r"^\[!\[(?P<label>[^\]]*)\]\((?P<src>[^\)]*)\)\]\((?P<href>[^\)]*)\)$")
 
 def read(fname):
     """Read Markdown File And Convert to reST"""
@@ -44,7 +42,7 @@ def read(fname):
             continue
         if line[0:5] == "Note:":
             line = ".. Note::" + line[5:]
-        line = relink.sub('`\g<label> <\g<href>>`_',line)
+        line = relink.sub(r'`\g<label> <\g<href>>`_',line)
         lines += line
     return lines
 
